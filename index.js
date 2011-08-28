@@ -49,7 +49,9 @@
     var attrsString, property;
     attrsString = '';
     for (property in attrs) {
-      attrsString += "" + property + "=\"" + attrs[property] + "\" ";
+      if (attrs.hasOwnProperty(property)) {
+        attrsString += "" + property + "=\"" + attrs[property] + "\" ";
+      }
     }
     if (attrsString.length > 0) {
       attrsString = attrsString.substring(0, attrsString.length - 1);

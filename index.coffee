@@ -43,7 +43,8 @@ toHTML = (content) ->
 # converts attributes to html
 attrsToHTML = (attrs) ->
 	attrsString = ''
-	attrsString += "#{property}=\"#{attrs[property]}\" " for property of attrs
+	for property of attrs
+		attrsString += "#{property}=\"#{attrs[property]}\" " if attrs.hasOwnProperty property
 	if attrsString.length > 0
 		attrsString = attrsString.substring 0, attrsString.length - 1
 	attrsString
