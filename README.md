@@ -96,6 +96,7 @@ I don't know!
 TODO
 ----
 * Pretty printing
+* Comments
 
 CREDITS
 -------
