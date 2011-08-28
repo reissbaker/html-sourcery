@@ -1,0 +1,19 @@
+{
+  "author": "Matt Baker",
+  "name": "html-sourcery",
+  "description": "A pure-Javascript library for conjuring up HTML",
+  "version": "0.1.0",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/reissbaker/html-sourcery.git"
+  },
+  "main": "index.js",
+  "scripts": {
+    "test": "node test.js"
+  },
+  "engines": {
+    "node": ">=v0.4.1"
+  },
+  "dependencies": {},
+  "devDependencies": {}
+}
