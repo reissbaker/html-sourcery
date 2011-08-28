@@ -131,7 +131,11 @@ var testOutput = function(bloop) {
 			]),
 			s.body([
 				s.h1(params.title),
-				s.h2('WIZARDROUS'),
+				s.h2(function() {
+					if(params.dumbledore)
+						return 'WIZARDROUS';
+					return 'THIS IS HORRIFYING AND I NEVER MEANT IT TO HAPPEN.';
+				}),
 				s.div({ class: 'container' }, [
 					s.code('...'),
 					s.p('Outputs:'),
@@ -141,5 +145,5 @@ var testOutput = function(bloop) {
 		])
 	});
 
-	testOutput(template.compile({ title: 'HTML SOURCERY' }));
+	testOutput(template.compile({ title: 'HTML SOURCERY', dumbledore: true }));
 }());

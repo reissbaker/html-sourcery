@@ -14,7 +14,11 @@ var template = src.template(src.doctype(5), function(params) {
 		]),
 		src.body([
 			src.h1(params.title),
-			src.h2('WIZARDROUS'),
+			src.h2(function() {
+				if(params.dumbledore)
+					return 'WIZARDROUS';
+				return 'THIS IS HORRIFYING AND I NEVER MEANT IT TO HAPPEN.';
+			}),
 			src.div({ class: 'container' }, [
 				src.code('...'),
 				src.p('Outputs:'),
@@ -26,7 +30,7 @@ var template = src.template(src.doctype(5), function(params) {
 	])
 });
 
-console.log(template.compile({ title: 'HTML SOURCERY' }));
+console.log(template.compile({ title: 'HTML SOURCERY', dumbledore: true }));
 ```
 
 Outputs:
