@@ -3,7 +3,7 @@ HTML SOURCERY
 A pure-Javascript library for conjuring up HTML, meant for use with node. Observe:
 
 ```javascript
-src = require('./html-sourcery');
+src = require('html-sourcery');
 
 var template = src.template(src.doctype(5), src.html([
 	src.head([
