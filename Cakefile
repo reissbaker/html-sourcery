@@ -1,0 +1,10 @@
+fs            = require 'fs'
+path          = require 'path'
+{spawn, exec} = require 'child_process'
+
+# Compile the app to Javascript.
+task 'build', 'build the lib', ->
+	child = exec("coffee -c index.coffee", (err, stdout, stderr) ->
+    if err then console.log stderr.trim() else console.log '-- Build finished succesfully. --'
+  )
+	child.stdout.on 'data', (data) -> console.log data
