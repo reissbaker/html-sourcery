@@ -35,7 +35,7 @@ console.log(template.compile({ title: 'HTML SOURCERY', dumbledore: true }));
 Outputs:
 
 ```html
-<!DOCTYPE HTML><html><head><meta charset="utf-8"><title>HTML SOURCERY</title></head><body><h1>HTML SOURCERY</h1><h2>WIZARDROUS</h2><div class="container"><code>...</code><p>Outputs:</p><code>...</code></div><footer></footer></body></html>
+<!DOCTYPE HTML><html><head><meta charset="utf-8"><title>HTML SOURCERY</title></head><body><h1>HTML SOURCERY</h1><div class="container"><code>...</code><p>Outputs:</p><code>...</code><p>Which, by the way, is valid HTML5. No self-closing tags here.</p><p>Wizardrous.</p></div><footer></footer></body></html>
 ```
 
 Which, by the way, is valid HTML5. No self-closing tags here.
