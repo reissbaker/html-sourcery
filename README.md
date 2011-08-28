@@ -44,7 +44,7 @@ WHY
 ---
 Data as code, code as data. Templating languages like to mix underpowered data formats with syntax-heavy games of Twister, and refuse to let you ```require``` in code you've already written. To quote a [wise man](https://sites.google.com/site/steveyegge2/the-emacs-problem): 
 
-> I know, I know — everyone raves about the power of separating your code and your data ... But it's what you really want, or all the creepy half-languages wouldn't all evolve towards being Turing-complete, would they?
+> I know, I know — everyone raves about the power of separating your code and your data . . . But it's what you really want, or all the creepy half-languages wouldn't all evolve towards being Turing-complete, would they?
 
 FAQ
 ---
