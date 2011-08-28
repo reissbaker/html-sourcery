@@ -99,6 +99,9 @@ TODO
 ----
 * Pretty printing
 * Comments
+* Split the compilation stage into two steps: generate, and compile. Generation leaves you with a full tag tree (no functions), and compilation gives you the HTML strings. Generation is useful because it lets you easily traverse (and possibly manipulate) the tree.
+* Get rid of templates as being special objects. Just have the generate and compile functions each take Doctypes.
+* Rename all ```toHTML``` functions to ```compile```.
 
 CREDITS
 -------
