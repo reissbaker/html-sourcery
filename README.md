@@ -53,15 +53,26 @@ HOW
 Install:
 ```npm install html-sourcery```
 
-(Nearly) everything in HTML Sourcery is based around the concept of tags. Tags have one method: ```tag.toHTML(params)```, where ```params``` is an Object. More on that later, as you'll see.
+### Tags
+(Nearly) everything in HTML Sourcery is based around the concept of tags. Tags work as follows:
+* ```src.tag(name, [attrs], [content])``` creates tags, where name is a string corresponding to the name of an HTML tag ("div", for example), attrs is an optional object that maps html attributes to html attribute values ({'class': 'eye-of-newt'}, for example), and content is an optional valid HTML string, tag, function that returns a string or tag, or an array of strings, tags, and/or functions.
+* ```tag.toHTML(params)```, where params is an object. The ```params``` object gets passed to any functions inside the tag's child-content, so that tags and tag content can be generated dynamically.
 
-Tags are correspondant to HTML tags; to create a normal tag, simply call: ```src.tag(name, [attrs], [content])```, where attrs is an (optional) map of HTML attribute names and values, and content is either a string of valid HTML, a tag, a function that returns either a string of valid HTML or a tag, or an array of any of the previous data types. The tag itself is a parent to the content; for example, ```src.tag('div', src.tag('p', 'hello'))``` would compile to ```<div><p>hello</p></div>``` when the tag's ```toHTML(params)``` method was called. Each function is of the form: ```function(params)```, where ```params```, as mentioned earlier, is an Object. This is the reason that tags' ```toHTML``` functions take a ```params``` object: so that variables can be injected into the templates dynamically.
+Not all HTML tags are the same, though: some are considered "void," and can't contain child elements. Void tags are created as follows:
+* ```src.voidtag(name, [attrs])```. 
 
-Not all HTML tags are the same, though: some are considered "void," and can't contain child elements. To create void tags, call: ```src.voidtag(name, [attrs])```. Except for the fact that void tags can't contain child content, usage of the tags are exactly the same. However, when void tags are compiled, they will not self-close (to differentiate the content as being HTML, and not XHTML).
+Except for the fact that void tags can't contain child content, usage of both types of tags is exactly the same. However, when void tags are compiled, they will not self-close, so as to differentiate the content as being HTML and not XHTML.
 
-For convenience, all legal HTML5 tags are already defined in HTML Sourcery as wrapper functions to tag or voidtag. For example, to create a div tag, you can just use the following function: ```src.div([attrs], [content])```, instead of the more verbose: ```src.tag('div', [attrs], [content])```.
+For convenience, all legal HTML5 tags are already defined in HTML Sourcery as wrapper functions to tag or voidtag. For example, to create a div tag, you can just use the following function: 
+* ```src.div([attrs], [content])```, instead of the more verbose: ```src.tag('div', [attrs], [content])```.
 
-All tags are organized into templates, using the ```src.template(doctype, content)``` function, where doctype is a valid doctype string, and content is a either a tag or a function that returns a tag (realistically, it should either be the 'html' tag or a function that returns the 'html' tag). Templates have a single method: ```template.compile(params)```, where params is an Object, and which compiles the tags using it for each of the functions inside.
+### Templates
+All tags are organized into templates. Templates work as follows:
+* ```src.template(doctype, content)``` creates templates, where doctype is a valid HTML doctype string, and content is a either a tag or a function that returns a tag (realistically, it should either be the 'html' tag or a function that returns the 'html' tag). 
+* ```template.compile(params)``` compiles templates into HTML strings, where params is an Object that gets passed to the template's child tags' ```toHTML()``` function.
+
+For convenience, a function to generate valid Doctypes is also defined. It works as follows:
+* ```src.doctype(version)```, where version is a number representing a version of HTML. Only HTML5 is currently supported, which means that the only valid usage of the ```doctype``` function is ```src.doctype(5)```.
 
 FAQ
 ---
