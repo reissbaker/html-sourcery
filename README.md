@@ -35,11 +35,11 @@ Outputs:
 <!DOCTYPE HTML><html><head><meta charset="utf-8"><title>HTML SOURCERY</title></head><body><h1>HTML SOURCERY</h1><h2>WIZARDROUS</h2><div class="container"><code>...</code><p>Outputs:</p><code>...</code></div><footer></footer></body></html>
 ```
 
-Which, by the by, is valid HTML5. No self-closing tags here.
+Which, by the way, is valid HTML5. No self-closing tags here.
 
 WHAT
 ----
-It's a pure-Javascript library for generating HTML, meant for use with node.
+It's a pure-Javascript library for conjuring up HTML, meant for use with node.
 
 WHY
 ---
