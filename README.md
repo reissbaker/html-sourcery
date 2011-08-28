@@ -5,29 +5,28 @@ A a pure-Javascript library for conjuring up HTML, meant for use with node. Obse
 ```javascript
 src = require('./html-sourcery');
 
-var template = src.template(src.doctype(5), function(params) {
-	return src.html([
-		src.head([
-			src.meta({ charset: 'utf-8' }),
-			src.title(params.title)
-		]),
-		src.body([
-			src.h1(params.title),
-			src.h2(function() {
+var template = src.template(src.doctype(5), src.html([
+	src.head([
+		src.meta({ charset: 'utf-8' }),
+		src.title(function(params) { return params.title; })
+	]),
+	src.body([
+		src.h1(function(params) { return params.title; }),
+		src.div({ class: 'container' }, [
+			src.code('...'),
+			src.p('Outputs:'),
+			src.code('...'),
+			src.p('Which, by the way, is valid HTML5. No self-closing tags here.'),
+			function(params) {
 				if(params.dumbledore)
-					return 'WIZARDROUS';
-				return 'THIS IS HORRIFYING AND I NEVER MEANT IT TO HAPPEN.';
-			}),
-			src.div({ class: 'container' }, [
-				src.code('...'),
-				src.p('Outputs:'),
-				src.code('...')
-			]),
-			// empty footer
-			src.footer()
-		])
+					return src.p('Wizardrous.');
+				return src.h1('oh god how did this get in here i am not good with witchcraft');
+			}
+		]),
+		// empty footer
+		src.footer()
 	])
-});
+]));
 
 console.log(template.compile({ title: 'HTML SOURCERY', dumbledore: true }));
 ```
@@ -39,6 +38,8 @@ Outputs:
 ```
 
 Which, by the way, is valid HTML5. No self-closing tags here.
+
+Wizardrous.
 
 WHY
 ---

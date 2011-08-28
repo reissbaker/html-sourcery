@@ -123,27 +123,29 @@ var testOutput = function(bloop) {
 // test 9
 (function() {
 	testNumber(9);
-	var template = s.template(s.doctype(5), function(params) {
-		return s.html([
-			s.head([
-				s.meta({ charset: 'utf-8' }),
-				s.title(params.title)
-			]),
-			s.body([
-				s.h1(params.title),
-				s.h2(function() {
+	
+	var template = s.template(s.doctype(5), s.html([
+		s.head([
+			s.meta({ charset: 'utf-8' }),
+			s.title(function(params) { return params.title; })
+		]),
+		s.body([
+			s.h1(function(params) { return params.title; }),
+			s.div({ class: 'container' }, [
+				s.code('...'),
+				s.p('Outputs:'),
+				s.code('...'),
+				s.p('Which, by the way, is valid HTML5. No self-closing tags here.'),
+				function(params) {
 					if(params.dumbledore)
-						return 'WIZARDROUS';
-					return 'THIS IS HORRIFYING AND I NEVER MEANT IT TO HAPPEN.';
-				}),
-				s.div({ class: 'container' }, [
-					s.code('...'),
-					s.p('Outputs:'),
-					s.code('...')
-				])
-			])
+						return s.p('Wizardrous.');
+					return s.h1('oh god how did this get in here i am not good with witchcraft');
+				}
+			]),
+			// empty footer
+			s.footer()
 		])
-	});
+	]));
 
 	testOutput(template.compile({ title: 'HTML SOURCERY', dumbledore: true }));
 }());

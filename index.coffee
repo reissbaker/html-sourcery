@@ -24,16 +24,16 @@ typeOf = (value) ->
 ###
 
 # converts stuff to HTML.
-toHTML = (content) ->
+toHTML = (content, params) ->
 	if typeOf(content) == 'array'
 		allContent = ''
-		allContent += toHTML(entity) for entity in content
+		allContent += toHTML(entity, params) for entity in content
 		return allContent
 	if typeOf(content) == 'function'
-		return toHTML content()
+		return toHTML content(params)
 	if typeOf(content) == 'string'
 		return content
-	return content.toHTML()
+	return content.toHTML(params)
 
 
 ###
@@ -68,20 +68,20 @@ endTagHTML = (name) ->
 # normal tag
 class Tag
 	constructor: (@name, @attrs, @content) ->
-	toHTML: () ->
-		startTagHTML(@name, @attrs) + toHTML(@content) + endTagHTML(@name)
+	toHTML: (params) ->
+		startTagHTML(@name, @attrs) + toHTML(@content, params) + endTagHTML(@name)
 
 # void tag
 class VoidTag
 	constructor: (@name, @attrs) ->
-	toHTML: () ->
+	toHTML: (params) ->
 		startTagHTML(@name, @attrs)
 
 # template
 class Template
 	constructor: (@doctype, @tagFn) ->
 	compile: (params) ->
-		@doctype + toHTML(@tagFn(params))
+		@doctype + toHTML(@tagFn(params), params)
 
 ###
 	Function exports

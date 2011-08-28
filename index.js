@@ -23,23 +23,23 @@
   	HTML conversion.
   	================
   */
-  toHTML = function(content) {
+  toHTML = function(content, params) {
     var allContent, entity, _i, _len;
     if (typeOf(content) === 'array') {
       allContent = '';
       for (_i = 0, _len = content.length; _i < _len; _i++) {
         entity = content[_i];
-        allContent += toHTML(entity);
+        allContent += toHTML(entity, params);
       }
       return allContent;
     }
     if (typeOf(content) === 'function') {
-      return toHTML(content());
+      return toHTML(content(params));
     }
     if (typeOf(content) === 'string') {
       return content;
     }
-    return content.toHTML();
+    return content.toHTML(params);
   };
   /*
   	helper functions
@@ -80,8 +80,8 @@
       this.attrs = attrs;
       this.content = content;
     }
-    Tag.prototype.toHTML = function() {
-      return startTagHTML(this.name, this.attrs) + toHTML(this.content) + endTagHTML(this.name);
+    Tag.prototype.toHTML = function(params) {
+      return startTagHTML(this.name, this.attrs) + toHTML(this.content, params) + endTagHTML(this.name);
     };
     return Tag;
   })();
@@ -90,7 +90,7 @@
       this.name = name;
       this.attrs = attrs;
     }
-    VoidTag.prototype.toHTML = function() {
+    VoidTag.prototype.toHTML = function(params) {
       return startTagHTML(this.name, this.attrs);
     };
     return VoidTag;
@@ -101,7 +101,7 @@
       this.tagFn = tagFn;
     }
     Template.prototype.compile = function(params) {
-      return this.doctype + toHTML(this.tagFn(params));
+      return this.doctype + toHTML(this.tagFn(params), params);
     };
     return Template;
   })();
