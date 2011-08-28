@@ -3,6 +3,8 @@ HTML SOURCERY
 
 WIZARDROUS
 ----------
+A a pure-Javascript library for conjuring up HTML, meant for use with node. Observe:
+
 ```javascript
 src = require('./html-sourcery');
 
@@ -40,10 +42,6 @@ Outputs:
 ```
 
 Which, by the way, is valid HTML5. No self-closing tags here.
-
-WHAT
-----
-It's a pure-Javascript library for conjuring up HTML, meant for use with node.
 
 WHY
 ---
