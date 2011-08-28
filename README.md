@@ -48,6 +48,8 @@ Data as code, code as data. Templating languages like to mix underpowered data f
 
 > I know, I know — everyone raves about the power of separating your code and your data . . . But it's [not] what you really want, or all the creepy half-languages wouldn't all evolve towards being Turing-complete, would they?
 
+HTML Sourcery isn't a templating language: it's a templating _library_, and that makes all the difference. Source files are just .js files, and you can ```require``` away at will.
+
 HOW
 ---
 Install:
