@@ -5,7 +5,7 @@ A pure-Javascript library for conjuring up HTML, meant for use with node. Observ
 ```javascript
 src = require('html-sourcery');
 
-var template = src.template(src.doctype(5), src.html([
+console.log(src.compile(src.doctype(5), { title: 'HTML SOURCERY', dumbledore: true }, src.html([
 	src.head([
 		src.meta({ charset: 'utf-8' }),
 		src.title(function(params) { return params.title; })
@@ -27,9 +27,7 @@ var template = src.template(src.doctype(5), src.html([
 		// empty footer
 		src.footer()
 	])
-]));
-
-console.log(template.compile({ title: 'HTML SOURCERY', dumbledore: true }));
+])));
 ```
 
 Outputs:
@@ -59,7 +57,7 @@ Install:
 (Nearly) everything in HTML Sourcery is based around the concept of tags. Tags work as follows:
 
 * ```src.tag(name, [attrs], [content])``` creates tags, where name is a string corresponding to the name of an HTML tag ("div", for example), attrs is an optional object that maps html attributes to html attribute values ({'class': 'eye-of-newt'}, for example), and content is an optional valid HTML string, tag, function that returns a string or tag, or an array of strings, tags, and/or functions.
-* ```tag.toHTML(params)```, where params is an object. The ```params``` object gets passed to any functions inside the tag's child-content, so that tags and tag content can be generated dynamically.
+* ```tag.compile(params)```, where params is an object. The ```params``` object gets passed to any functions inside the tag's child-content, so that tags and tag content can be generated dynamically.
 
 Not all HTML tags are the same, though: some are considered "void," and can't contain child elements. Void tags are created as follows:
 
@@ -71,11 +69,12 @@ For convenience, all legal HTML5 tags are already defined in HTML Sourcery as wr
 
 * ```src.div([attrs], [content])```, instead of the more verbose: ```src.tag('div', [attrs], [content])```.
 
-### Templates
-All tags are organized into templates. Templates work as follows:
+### Compiling Tags
+Tags can easily be compiled to valid HTML using HTML Sourcery's ```compile``` function:
 
-* ```src.template(doctype, content)``` creates templates, where doctype is a valid HTML doctype string, and content is a either a tag or a function that returns a tag (realistically, it should either be the 'html' tag or a function that returns the 'html' tag). 
-* ```template.compile(params)``` compiles templates into HTML strings, where params is an Object that gets passed to the template's child tags' ```toHTML()``` function.
+* ```src.compile([doctype], [params], content)``` compiles templates into HTML strings, where doctype is an optional valid HTML Doctype string (if it isn't provided, the default HTML5 Doctype will be used), params is an optional Object that gets passed to the template's content's ```compile``` function.
+
+Compiling using only the ```tag.compile``` functions instead of the ```src.compile``` function allows you to generate cached partials of the HTML content you want to serve. However, you do need to eventually use the ```src.compile``` function -- otherwise your HTML will lack a Doctype and be invalid.
 
 For convenience, a function to generate valid Doctypes is also defined. It works as follows:
 
@@ -99,9 +98,7 @@ TODO
 ----
 * Pretty printing
 * Comments
-* Split the compilation stage into two steps: generate, and compile. Generation leaves you with a full tag tree (no functions), and compilation gives you the HTML strings. Generation is useful because it lets you easily traverse (and possibly manipulate) the tree. Some gotchas, though: the "tree" doesn't only contain tags -- it also may contain valid HTML strings, like ```"hello <a href='http://www.example.com'>link</a>"```.
-* Get rid of templates as being special objects. Just have the generate and compile functions each take Doctypes.
-* Rename all ```toHTML``` functions ```compile```.
+* Possibly split the compilation stage into two steps: generate, and compile. Generation leaves you with a full tag tree (no functions), and compilation gives you the HTML strings. Generation is useful because it lets you easily traverse (and possibly manipulate) the tree. Some gotchas, though: the "tree" doesn't only contain tags -- it also may contain valid HTML strings, like ```"hello <a href='http://www.example.com'>link</a>"```.
 
 CREDITS
 -------
