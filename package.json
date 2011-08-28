@@ -2,7 +2,7 @@
   "author": "Matt Baker",
   "name": "html-sourcery",
   "description": "A pure-Javascript library for conjuring up HTML",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "repository": {
     "type": "git",
     "url": "git://github.com/reissbaker/html-sourcery.git"
