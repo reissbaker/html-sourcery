@@ -1,6 +1,6 @@
 HTML SOURCERY
 =============
-A a pure-Javascript library for conjuring up HTML, meant for use with node. Observe:
+A pure-Javascript library for conjuring up HTML, meant for use with node. Observe:
 
 ```javascript
 src = require('./html-sourcery');
@@ -13,6 +13,7 @@ var template = src.template(src.doctype(5), src.html([
 	src.body([
 		src.h1(function(params) { return params.title; }),
 		src.div({ class: 'container' }, [
+			src.p('A pure-Javascript library for conjuring up HTML, meant for use with node. Observe:'),
 			src.code('...'),
 			src.p('Outputs:'),
 			src.code('...'),
