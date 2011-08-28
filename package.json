@@ -9,7 +9,7 @@
   },
   "main": "index.js",
   "scripts": {
-    "test": "node test/test.js"
+    "test": "node test/srcry-test.js"
   },
   "engines": {
     "node": ">=v0.4.1"
