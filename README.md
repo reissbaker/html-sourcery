@@ -1,8 +1,5 @@
 HTML SOURCERY
 =============
-
-WIZARDROUS
-----------
 A a pure-Javascript library for conjuring up HTML, meant for use with node. Observe:
 
 ```javascript
