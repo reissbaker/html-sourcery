@@ -53,6 +53,8 @@ HOW
 Install:
 ```npm install html-sourcery```
 
+To run the test suite, first you have to install Vows: ```npm install vows```
+
 ### Tags
 (Nearly) everything in HTML Sourcery is based around the concept of tags. Tags work as follows:
 
