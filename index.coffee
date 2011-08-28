@@ -24,16 +24,16 @@ typeOf = (value) ->
 ###
 
 # converts stuff to HTML.
-toHTML = (content, params) ->
+compile = (content, params) ->
 	if typeOf(content) == 'array'
 		allContent = ''
-		allContent += toHTML(entity, params) for entity in content
+		allContent += compile(entity, params) for entity in content
 		return allContent
 	if typeOf(content) == 'function'
-		return toHTML content(params)
+		return compile content(params)
 	if typeOf(content) == 'string'
 		return content
-	return content.toHTML(params)
+	return content.compile(params)
 
 
 ###
@@ -68,20 +68,14 @@ endTagHTML = (name) ->
 # normal tag
 class Tag
 	constructor: (@name, @attrs, @content) ->
-	toHTML: (params) ->
-		startTagHTML(@name, @attrs) + toHTML(@content, params) + endTagHTML(@name)
+	compile: (params) ->
+		startTagHTML(@name, @attrs) + compile(@content, params) + endTagHTML(@name)
 
 # void tag
 class VoidTag
 	constructor: (@name, @attrs) ->
-	toHTML: (params) ->
-		startTagHTML(@name, @attrs)
-
-# template
-class Template
-	constructor: (@doctype, @tagFn) ->
 	compile: (params) ->
-		@doctype + toHTML(@tagFn(params), params)
+		startTagHTML(@name, @attrs)
 
 ###
 	Function exports
@@ -109,11 +103,27 @@ exports.doctype = (value) ->
 	return '<!DOCTYPE HTML>' if value == 5
 	return ''
 
-# creates templates
-exports.template = (doctype, content) ->
-	return new Template(doctype, content) if typeOf(content) == 'function'
-	return new Template doctype, (params) ->
-		content
+# compiles templates
+exports.compile = (rest...) ->
+	params = {}
+	doctype = ''
+	content = null
+	if rest.length == 3
+		doctype = rest[0]
+		params = rest[1]
+		content = rest[2]
+	else if rest.length == 2
+		if typeOf(rest[0]) == 'string'
+			doctype = rest[0]
+		else
+			doctype = exports.doctype(5)
+			params = rest[0]
+		content = rest[1]
+	else
+		doctype = exports.doctype(5)
+		content = rest[0]
+	
+	return doctype + compile(content, params)
 
 # throw in some sugar for creating most HTML tags
 normalTags = [

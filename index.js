@@ -3,7 +3,7 @@
   	Utility functions.
   	==================
   */
-  var Tag, Template, VoidTag, attrsToHTML, endTagHTML, exportTag, exportVoidTag, isArray, normalTags, ntag, startTagHTML, tag, toHTML, typeOf, voidTags, voidtag, vtag, _i, _j, _len, _len2;
+  var Tag, VoidTag, attrsToHTML, compile, endTagHTML, exportTag, exportVoidTag, isArray, normalTags, ntag, startTagHTML, tag, typeOf, voidTags, voidtag, vtag, _i, _j, _len, _len2;
   var __slice = Array.prototype.slice;
   isArray = function(value) {
     var s;
@@ -23,23 +23,23 @@
   	HTML conversion.
   	================
   */
-  toHTML = function(content, params) {
+  compile = function(content, params) {
     var allContent, entity, _i, _len;
     if (typeOf(content) === 'array') {
       allContent = '';
       for (_i = 0, _len = content.length; _i < _len; _i++) {
         entity = content[_i];
-        allContent += toHTML(entity, params);
+        allContent += compile(entity, params);
       }
       return allContent;
     }
     if (typeOf(content) === 'function') {
-      return toHTML(content(params));
+      return compile(content(params));
     }
     if (typeOf(content) === 'string') {
       return content;
     }
-    return content.toHTML(params);
+    return content.compile(params);
   };
   /*
   	helper functions
@@ -80,8 +80,8 @@
       this.attrs = attrs;
       this.content = content;
     }
-    Tag.prototype.toHTML = function(params) {
-      return startTagHTML(this.name, this.attrs) + toHTML(this.content, params) + endTagHTML(this.name);
+    Tag.prototype.compile = function(params) {
+      return startTagHTML(this.name, this.attrs) + compile(this.content, params) + endTagHTML(this.name);
     };
     return Tag;
   })();
@@ -90,20 +90,10 @@
       this.name = name;
       this.attrs = attrs;
     }
-    VoidTag.prototype.toHTML = function(params) {
+    VoidTag.prototype.compile = function(params) {
       return startTagHTML(this.name, this.attrs);
     };
     return VoidTag;
-  })();
-  Template = (function() {
-    function Template(doctype, tagFn) {
-      this.doctype = doctype;
-      this.tagFn = tagFn;
-    }
-    Template.prototype.compile = function(params) {
-      return this.doctype + toHTML(this.tagFn(params), params);
-    };
-    return Template;
   })();
   /*
   	Function exports
@@ -137,13 +127,29 @@
     }
     return '';
   };
-  exports.template = function(doctype, content) {
-    if (typeOf(content) === 'function') {
-      return new Template(doctype, content);
+  exports.compile = function() {
+    var content, doctype, params, rest;
+    rest = 1 <= arguments.length ? __slice.call(arguments, 0) : [];
+    params = {};
+    doctype = '';
+    content = null;
+    if (rest.length === 3) {
+      doctype = rest[0];
+      params = rest[1];
+      content = rest[2];
+    } else if (rest.length === 2) {
+      if (typeOf(rest[0]) === 'string') {
+        doctype = rest[0];
+      } else {
+        doctype = exports.doctype(5);
+        params = rest[0];
+      }
+      content = rest[1];
+    } else {
+      doctype = exports.doctype(5);
+      content = rest[0];
     }
-    return new Template(doctype, function(params) {
-      return content;
-    });
+    return doctype + compile(content, params);
   };
   normalTags = ['a', 'abbr', 'address', 'article', 'aside', 'audio', 'b', 'bb', 'bdo', 'blockquote', 'body', 'button', 'canvas', 'caption', 'cite', 'code', 'colgroup', 'datagrid', 'datalist', 'dd', 'del', 'details', 'dfn', 'dialog', 'div', 'dl', 'dt', 'em', 'fieldset', 'figure', 'footer', 'form', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'head', 'header', 'html', 'i', 'iframe', 'ins', 'kbd', 'label', 'legend', 'li', 'map', 'mark', 'menu', 'meter', 'nav', 'noscript', 'object', 'ol', 'optgroup', 'option', 'output', 'p', 'pre', 'progress', 'q', 'rp', 'rt', 'ruby', 'samp', 'script', 'section', 'select', 'small', 'span', 'strong', 'style', 'sub', 'sup', 'table', 'tbody', 'td', 'textarea', 'tfoot', 'th', 'thead', 'time', 'title', 'tr', 'ul', 'var', 'video'];
   voidTags = ['area', 'base', 'br', 'col', 'command', 'embed', 'hr', 'img', 'input', 'link', 'meta', 'param', 'source'];

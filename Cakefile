@@ -8,3 +8,9 @@ task 'build', 'build the lib', ->
     if err then console.log stderr.trim() else console.log '-- Build finished succesfully. --'
   )
 	child.stdout.on 'data', (data) -> console.log data
+
+# Test the app
+task 'build:test', 'test the lib', ->
+	child = exec('coffee -c test/srcry-test.coffee', (err, stdout, stderr) ->
+		if err then console.log stderr.trim() else console.log '-- Test built succesfully. --'
+	)

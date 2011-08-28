@@ -9,11 +9,13 @@
   },
   "main": "index.js",
   "scripts": {
-    "test": "node test.js"
+    "test": "node test/test.js"
   },
   "engines": {
     "node": ">=v0.4.1"
   },
   "dependencies": {},
-  "devDependencies": {}
+  "devDependencies": {
+		"vows": ">=0.5.11"
+	}
 }
