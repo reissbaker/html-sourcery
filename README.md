@@ -82,20 +82,6 @@ For convenience, a function to generate valid Doctypes is also defined. It works
 
 * ```src.doctype(version)```, where version is a number representing a version of HTML. Only HTML5 is currently supported, which means that the only valid usage of the ```doctype``` function is ```src.doctype(5)```.
 
-FAQ
----
-> Can I use it?
-
-Yes! Please.
-
-> Does it support anything except HTML5?
-
-Um. Well. Next week? Maybe.
-
-> Can I use it without node?
-
-I don't know!
-
 TODO
 ----
 * Pretty printing
