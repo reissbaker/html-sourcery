@@ -40,6 +40,7 @@ compile = (content, params) ->
 	helper functions
 	----------------
 ###
+
 # converts attributes to html
 attrsToHTML = (attrs) ->
 	attrsString = ''
@@ -78,11 +79,17 @@ class VoidTag
 		startTagHTML(@name, @attrs)
 
 ###
-	Function exports
+	Function root
 	================
-###	
+###
+
+if typeof exports != 'undefined'
+	root = exports
+else
+	root = this.htmlSourcery = {}
+
 # creates a normal tag
-exports.tag = tag = (name, rest...) ->
+root.tag = tag = (name, rest...) ->
 	if rest.length == 0
 		return new Tag name, {}, ''
 	if rest.length == 1
@@ -93,18 +100,18 @@ exports.tag = tag = (name, rest...) ->
 		return new Tag name, rest[0], rest[1]
 
 # creates a void tag
-exports.voidtag = voidtag = (name, attrs) ->
+root.voidtag = voidtag = (name, attrs) ->
 	if attrs
 		return new VoidTag name, attrs
 	return new VoidTag name, {}
 
 # creates doctypes (only works with HTML5 currently!)
-exports.doctype = (value) ->
+root.doctype = (value) ->
 	return '<!DOCTYPE HTML>' if value == 5
 	return ''
 
 # compiles templates
-exports.compile = (rest...) ->
+root.compile = (rest...) ->
 	params = {}
 	doctype = ''
 	content = null
@@ -116,11 +123,11 @@ exports.compile = (rest...) ->
 		if typeOf(rest[0]) == 'string'
 			doctype = rest[0]
 		else
-			doctype = exports.doctype(5)
+			doctype = root.doctype(5)
 			params = rest[0]
 		content = rest[1]
 	else
-		doctype = exports.doctype(5)
+		doctype = root.doctype(5)
 		content = rest[0]
 	
 	return doctype + compile(content, params)
@@ -142,10 +149,10 @@ voidTags = [
 ]
 
 exportTag = (tagname) ->
-	exports[tagname] = (rest...) ->
+	root[tagname] = (rest...) ->
 		tag tagname, rest...
 exportVoidTag = (tagname) ->
-	exports[tagname] = (rest...) ->
+	root[tagname] = (rest...) ->
 		voidtag tagname, rest...
 
 exportTag(ntag) for ntag in normalTags
